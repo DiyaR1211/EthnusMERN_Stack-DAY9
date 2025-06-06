@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      width: 400px;
+      margin: auto;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: inline-block;
+      width: 80px;
+      vertical-align: top;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    textarea {
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 13px;
+      margin-left: 10px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .input-error {
+      border: 2px solid red;
+    }
+
+    textarea {
+      height: 60px;
+    }
+
+    button {
+      margin-left: 85px;
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Registration Form</h2>
+  <form id="registrationForm" onsubmit="return validateForm();">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name">
+      <span id="nameError" class="error-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email">
+      <span id="emailError" class="error-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="website">Website:</label>
+      <input type="text" id="website">
+      <span id="websiteError" class="error-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message:</label>
+      <textarea id="message"></textarea>
+      <span id="messageError" class="error-message"></span>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Clear previous errors
+      const fields = ['name', 'email', 'website', 'message'];
+      fields.forEach(field => {
+        document.getElementById(field).classList.remove('input-error');
+        document.getElementById(field + 'Error').innerText = '';
+      });
+
+      // Name
+      const name = document.getElementById("name").value.trim();
+      if (name === "") {
+        document.getElementById("nameError").innerText = "This field is required";
+        document.getElementById("name").classList.add("input-error");
+        isValid = false;
+      }
+
+      // Email
+      const email = document.getElementById("email").value.trim();
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerText = "A valid email address is required";
+        document.getElementById("email").classList.add("input-error");
+        isValid = false;
+      }
+
+      // Website
+      const website = document.getElementById("website").value.trim();
+      const urlPattern = /^(https?:\/\/)?([\w\-])+\.{1}([a-zA-Z]{2,63})([\/\w\-]*)*\/?$/;
+      if (!urlPattern.test(website)) {
+        document.getElementById("websiteError").innerText = "A valid url is required";
+        document.getElementById("website").classList.add("input-error");
+        isValid = false;
+      }
+
+      // Message
+      const message = document.getElementById("message").value.trim();
+      if (message === "") {
+        document.getElementById("messageError").innerText = "This field is required";
+        document.getElementById("message").classList.add("input-error");
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
+
